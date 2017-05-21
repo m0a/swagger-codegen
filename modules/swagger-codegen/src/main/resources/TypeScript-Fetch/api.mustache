@@ -108,7 +108,10 @@ export const {{classname}}FetchParamCreator = {
         });
 {{/hasFormParams}}
 {{#hasBodyParam}}
-        contentTypeHeader = { "Content-Type": "application/json" };{{#bodyParam}}
+        contentTypeHeader = { "Content-Type": "application/json" };
+        if (options.headers) {
+            contentTypeHeader = {{#supportsES6}}Object.{{/supportsES6}}assign(contentTypeHeader, options.headers);
+        }{{#bodyParam}}
         if (params["{{paramName}}"]) {
             fetchOptions.body = JSON.stringify(params["{{paramName}}"] || {});
         }{{/bodyParam}}
